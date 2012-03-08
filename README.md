@@ -14,6 +14,12 @@ The code is implemented in Python, as this is the language used for the class. O
 
 URL: http://www.meetup.com/SanDiegoAI/
 
+## Instructions
+
+Download nxt-python from:
+
+http://code.google.com/p/nxt-python/
+
 ## License
 
 Open source license to be determined.

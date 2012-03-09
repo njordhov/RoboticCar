@@ -19,7 +19,7 @@ def start_robot(x, y, landscape):
     robot = Robot (x, y)
     robot.color = None
     robot.size = 5
-    filter = Particle_Filter(N=1000)
+    filter = Particle_Filter(N=10000)
     filter.display(canvas)
     robot.display(canvas)
     
@@ -32,6 +32,8 @@ def start_robot(x, y, landscape):
         canvas.create_line(robot.x, robot.y, event.x, event.y)
         robot.move(rotation, distance)
         robot.display(canvas)
+
+        filter.erase(canvas)
         filter.update(rotation, distance, Z, lambda x, y: landscape.surface (x, y))
         filter.display(canvas)
         

@@ -4,6 +4,7 @@ from Tkinter import *
 from landscape import Landscape
 from math import *
 import random
+import time
 
 
 class Robot:
@@ -17,16 +18,19 @@ class Robot:
         self.y = y
         self.orientation = orientation
     
+    def erase (self, canvas):
+        if self.widget:
+            canvas.delete(self.widget)
+    
     def display (self, canvas):
         size = self.size
         color = self.color
-        if self.widget:
-            canvas.delete(self.widget)
+        self.erase(canvas)
         self.widget = canvas.create_rectangle(self.x - size, self.y - size, self.x + size, self.y + size, fill=color)
     
     def move (self, rotation, distance):
         self.orientation += rotation
-        self.orientation %= 2* pi
+        self.orientation %= 2 * pi
         self.x += (cos (self.orientation) * distance)
         self.y += (sin (self.orientation) * distance)
     

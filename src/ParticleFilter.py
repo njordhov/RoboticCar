@@ -10,7 +10,7 @@ from landscape import Landscape
 import Sampling
 
 
-class Particle_Filter:
+class ParticleFilter:
     
     turn_noise = 0.04
     forward_noise = 0.3

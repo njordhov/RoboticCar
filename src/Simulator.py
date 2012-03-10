@@ -3,8 +3,9 @@
 from Tkinter import *
 from math import *
 
-from Particle_Filter import Particle_Filter
+from ParticleFilter import ParticleFilter
 from Robot import Robot
+import time
 
 
 class Simulator:
@@ -18,7 +19,7 @@ class Simulator:
         canvas.pack()
         self.world = world
         world.display(canvas)
-        self.localizer = Particle_Filter(N=3000, width=width, height=height)
+        self.localizer = ParticleFilter(N=3000, width=width, height=height)
         localizer = self.localizer
         localizer.display(canvas)
     
@@ -33,6 +34,13 @@ class Simulator:
     
         self.canvas.bind("<Button-1>", callback)
         mainloop()
+
+    
+    def explore (self, x, y, moves, delay = 1/2):
+        self.place_robot(x, y)
+        for (x, y) in moves:
+            self.move_robot(x, y)
+            time.sleep(delay)
     
     
     def move_robot(self, rotation, distance):
@@ -50,6 +58,7 @@ class Simulator:
         Z = self.world.surface (robot.x, robot.y)
         localizer.update(rotation, distance, Z, lambda x, y: self.world.surface (x, y))
         localizer.display(canvas)
+        self.master.update()
         print Z
 
     
@@ -57,6 +66,7 @@ class Simulator:
         """Move the robot to the given position on the canvas"""
         if not self.robot:
             self.robot = Robot (x, y)
+            self.robot.display_noise = 0.0
             self.robot.color = "green"
             self.robot.size = 5
 

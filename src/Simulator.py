@@ -52,6 +52,7 @@ class Simulator:
         original_x = robot.x
         original_y = robot.y
         robot.move(rotation, distance)
+        
         canvas.create_line(original_x, original_y, robot.x, robot.y)
         Z = self.world.surface (robot.x, robot.y)
         self.localizer.erase(canvas)

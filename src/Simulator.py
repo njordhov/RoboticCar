@@ -21,38 +21,52 @@ class Simulator:
         self.localizer = Particle_Filter(N=3000, width=width, height=height)
         localizer = self.localizer
         localizer.display(canvas)
+    
 
     def interactive (self):
         """Start interactive mode (doesn't return)"""
         print "Click anywhere on the canvas to place the robot"
         
         def callback (event):
-            self.move_robot(event.x, event.y)
+            print "@", event.x, ",", event.y
+            self.place_robot(event.x, event.y)
     
         self.canvas.bind("<Button-1>", callback)
         mainloop()
     
-    def move_robot(self, x, y):
-        """Move the robot to the given position on the canvas"""
-        if not self.robot:
-            self.robot = Robot (x, y)
-            self.robot.color = None
-            self.robot.size = 5
-
+    
+    def move_robot(self, rotation, distance):
         robot = self.robot
         canvas = self.canvas
         localizer = self.localizer
-        Z = self.world.surface (x, y)
-        print "@", x, ",", y, "->", Z 
-        bearing = atan2((y - robot.y), (x - robot.x))
-        rotation = bearing - robot.orientation
-        distance = sqrt((robot.x - x) ** 2 + (robot.y - y) ** 2)
-        canvas.create_line(robot.x, robot.y, x, y)
+        if not robot:
+            raise ValueError, "Need to place robot in simulator before moving it" 
+        original_x = robot.x
+        original_y = robot.y
         robot.move(rotation, distance)
+        canvas.create_line(original_x, original_y, robot.x, robot.y)
         robot.display(canvas)
         self.localizer.erase(canvas)
+        Z = self.world.surface (robot.x, robot.y)
         localizer.update(rotation, distance, Z, lambda x, y: self.world.surface (x, y))
         localizer.display(canvas)
+        print Z
+
+    
+    def place_robot(self, x, y, bearing=None):
+        """Move the robot to the given position on the canvas"""
+        if not self.robot:
+            self.robot = Robot (x, y)
+            self.robot.color = "green"
+            self.robot.size = 5
+
+        robot = self.robot
+        if not bearing:
+            bearing = atan2((y - robot.y), (x - robot.x))
+        rotation = bearing - robot.orientation
+        distance = sqrt((robot.x - x) ** 2 + (robot.y - y) ** 2)
+        self.move_robot(rotation, distance)
+                
 
         
 

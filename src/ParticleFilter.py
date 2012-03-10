@@ -12,8 +12,8 @@ import Sampling
 
 class ParticleFilter:
     
-    turn_noise = 0.02
-    forward_noise = 20.0
+    turn_noise = 0.01
+    forward_noise = 0.1
     sense_noise = 10.0
     
     def __init__ (self, N = 1000, width=1000, height=1000):
@@ -33,7 +33,7 @@ class ParticleFilter:
     
     def update (self, rotation, distance, Z, measure):
         for particle in self.particles:
-            particle.move(random.gauss(rotation, self.turn_noise), random.gauss(distance, self.forward_noise))
+            particle.move(rotation * random.gauss(1.0, self.turn_noise), distance * random.gauss(1.0, self.forward_noise))
             if measure(particle.x, particle.y):
                 particle.color = "blue" 
             else:

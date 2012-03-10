@@ -14,6 +14,16 @@ The code is implemented in Python, as this is the language used for the class. O
 
 URL: http://www.meetup.com/SanDiegoAI/
 
+## Description
+
+The first version of our robot can drive forward, turn, and sense the surface under it (binary, e.g. if it is dark or not).
+
+The file "car.py" contains the interface to control the robot and read its sensors.
+
+We've made a simulator to test the robot virtually, and experiment with various localization algorithms.
+
+There is an implementation of a particle filter to localize the robot.
+
 ## Running the Simulator
 
 $ cd src

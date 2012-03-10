@@ -12,8 +12,8 @@ import Sampling
 
 class ParticleFilter:
     
-    turn_noise = 0.01
-    forward_noise = 0.1
+    turn_noise = 0.005
+    forward_noise = 0.05
     sense_noise = 10.0
     
     def __init__ (self, N = 1000, width=1000, height=1000):

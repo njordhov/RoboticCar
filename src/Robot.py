@@ -12,6 +12,7 @@ class Robot:
     size = 2
     color = "red"
     widget = None
+    display_noise = 4.0
     
     def __init__ (self, x=0, y=0, orientation = 2 * pi):
         self.x = x
@@ -26,7 +27,10 @@ class Robot:
         size = self.size
         color = self.color
         self.erase(canvas)
-        self.widget = canvas.create_rectangle(self.x - size, self.y - size, self.x + size, self.y + size, fill=color)
+        # random displacement to disclose items in same position
+        x = self.x + random.gauss(0.0, self.display_noise)
+        y = self.y + random.gauss(0.0, self.display_noise)
+        self.widget = canvas.create_rectangle(x - size, y - size, x + size, y + size, fill=color)
     
     def move (self, rotation, distance):
         self.orientation += rotation

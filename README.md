@@ -14,11 +14,19 @@ The code is implemented in Python, as this is the language used for the class. O
 
 URL: http://www.meetup.com/SanDiegoAI/
 
-## Instructions
+## Running the Simulator
+
+$ cd src
+$ python demo.py
+
+## Controlling the Robot
 
 Download nxt-python from:
 
 http://code.google.com/p/nxt-python/
+
+$ cd src
+$ python car.py
 
 ## License
 

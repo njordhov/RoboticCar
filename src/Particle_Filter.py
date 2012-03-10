@@ -7,15 +7,20 @@ from copy import copy
 
 from Robot import Robot
 from landscape import Landscape
+import Sampling
 
 
 class Particle_Filter:
     
-    def __init__ (self, N = 100, width=1000, height=1000):
+    turn_noise = 0.04
+    forward_noise = 0.3
+    sense_noise = 10.0
+    
+    def __init__ (self, N = 1000, width=1000, height=1000):
         self.N = N
         self.particles = [Robot(random.random() * float(width), 
                                 random.random() * float(height), 
-                                random.random() * 2 * pi) 
+                                random.random() * 2.0 * pi) 
                           for i in range(N)]
 
     def display(self, canvas):
@@ -28,31 +33,16 @@ class Particle_Filter:
     
     def update (self, rotation, distance, Z, measure):
         for particle in self.particles:
-            particle.move(rotation + (random.random() - 0.5) / 10.0 , distance + (random.random() - 0.5) * 10)
+            particle.move(random.gauss(rotation, self.turn_noise), random.gauss(distance, self.forward_noise))
             if measure(particle.x, particle.y):
                 particle.color = "blue" 
             else:
                 particle. color = "red"
         
-        w = [(random.random() / 2 + 0.5 if (measure(particle.x, particle.y) == Z) else 0.1) 
+        w = [random.gauss(100.0, self.sense_noise) if measure(particle.x, particle.y) == Z else abs(random.gauss(0.0, self.sense_noise)) 
              for particle in self.particles]
-                
-        biggest = max(w)
-        beta = 0.0
-        index = random.randint(0, self.N-1)
-        p = []
-
-        print biggest
-                
-        for i in range(self.N):  
-            beta += random.random() * biggest * 2.0
-            while w[index] < beta: 
-                beta -= w[index]
-                index += 1
-                index %= self.N
-            p.append(copy(self.particles[index]))
-        
-        self.particles = p
+                                                    
+        self.particles = [copy(sample) for sample in Sampling.roulette(self.particles, w)]
  
 
 

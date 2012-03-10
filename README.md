@@ -26,8 +26,17 @@ There is an implementation of a particle filter to localize the robot.
 
 ## Running the Simulator
 
-$ cd src
-$ python demo.py
+    $ cd src
+    $ python demo.py
+
+## Game
+
+Can you control the robot to get all particles to cloud around it?
+
+    $ cd src
+    $ python game.py 7
+
+The numerical argument determines the complexity of the landscape.
 
 ## Controlling the Robot
 
@@ -35,8 +44,8 @@ Download nxt-python from:
 
 http://code.google.com/p/nxt-python/
 
-$ cd src
-$ python car.py
+    $ cd src
+    $ python car.py
 
 ## License
 

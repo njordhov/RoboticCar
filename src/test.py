@@ -3,7 +3,6 @@
 from landscape import Landscape
 from Simulator import Simulator
 from math import pi, sqrt
-from Tkinter import *
 
 world = Landscape (terrain = [[150,200,350,400], [400,400,600,600], [600,200,800,400]])
 demo = Simulator(world)

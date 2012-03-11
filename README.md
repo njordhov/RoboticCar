@@ -2,7 +2,7 @@
 
 Welcome to the Robotic Car project of the San Diego Artificial Intelligence study group.
 
-This is a hands-on complement to the Udacity 373 class "Programming a Robotic Car".
+This is a hands-on complement to the UDACITY CS 373 class "Programming a Robotic Car".
 
 We're implementing a controller for Mindstorms NXT models of self driven cars, with a matching simulator to test our algorithms.
 

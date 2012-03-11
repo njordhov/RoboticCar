@@ -6,7 +6,6 @@ import random
 from copy import copy
 
 from Robot import Robot
-from landscape import Landscape
 import Sampling
 
 

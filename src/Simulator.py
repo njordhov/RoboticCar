@@ -42,17 +42,16 @@ class Simulator:
             self.move_robot(x, y)
             time.sleep(delay)
     
-    
+
     def measurement_probabilty (self, particle, Z):
-        measure = self.world.surface (particle.x, particle.y)
-        if measure == Z:
+        loss = self.world.binary_loss(particle, Z)
+        if loss:
             particle.color = "blue"
-            return 1.0
         else:
-            particle. color = "red"
-            return 0.0
-    
-    
+            particle. color = "gray"
+        return loss
+
+                
     def move_robot(self, rotation, distance):
         robot = self.robot
         canvas = self.canvas

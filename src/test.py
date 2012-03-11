@@ -1,6 +1,6 @@
 
 
-from landscape import Landscape
+from Landscape import Landscape
 from Simulator import Simulator
 from math import pi, sqrt
 

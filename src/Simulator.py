@@ -43,34 +43,35 @@ class Simulator:
             time.sleep(delay)
     
     
+    def measurement_probabilty (self, particle, Z):
+        measure = self.world.surface (particle.x, particle.y)
+        if measure == Z:
+            particle.color = "blue"
+            return 1.0
+        else:
+            particle. color = "red"
+            return 0.0
+    
+    
     def move_robot(self, rotation, distance):
         robot = self.robot
         canvas = self.canvas
         localizer = self.localizer
         if not robot:
             raise ValueError, "Need to place robot in simulator before moving it" 
+        
         original_x = robot.x
         original_y = robot.y
         robot.move(rotation, distance)
         
         canvas.create_line(original_x, original_y, robot.x, robot.y)
         Z = self.world.surface (robot.x, robot.y)
-        self.localizer.erase(canvas)
-                
-        def measurement_probabilty (particle):
-            measure = self.world.surface (particle.x, particle.y)
-            if measure == Z:
-                particle.color = "blue"
-                return 1.0
-            else:
-                particle. color = "red"
-                return 0.0
-                
-        localizer.update(rotation, distance, measurement_probabilty)
+        self.localizer.erase(canvas)                                
+        localizer.update(rotation, distance, lambda particle: self.measurement_probabilty(particle, Z))
         localizer.display(canvas)
         robot.display(canvas)
         self.master.update()
-        print Z
+        print "Sense:", Z
 
     
     def place_robot(self, x, y, bearing=None):

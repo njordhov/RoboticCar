@@ -56,7 +56,17 @@ class Simulator:
         canvas.create_line(original_x, original_y, robot.x, robot.y)
         Z = self.world.surface (robot.x, robot.y)
         self.localizer.erase(canvas)
-        localizer.update(rotation, distance, Z, lambda x, y: self.world.surface (x, y))
+                
+        def measurement_probabilty (particle):
+            measure = self.world.surface (particle.x, particle.y)
+            if measure == Z:
+                particle.color = "blue"
+                return 1.0
+            else:
+                particle. color = "red"
+                return 0.0
+                
+        localizer.update(rotation, distance, measurement_probabilty)
         localizer.display(canvas)
         robot.display(canvas)
         self.master.update()

@@ -14,7 +14,7 @@ class ParticleFilter:
     
     turn_noise = 0.005
     forward_noise = 0.05
-    sense_noise = 10.0
+    sense_noise = 0.1
     
     def __init__ (self, N = 1000, width=1000, height=1000):
         self.N = N
@@ -31,15 +31,11 @@ class ParticleFilter:
         for particle in self.particles:
             particle.erase(canvas)
     
-    def update (self, rotation, distance, Z, measure):
+    def update (self, rotation, distance, measure):
         for particle in self.particles:
             particle.move(rotation * random.gauss(1.0, self.turn_noise), distance * random.gauss(1.0, self.forward_noise))
-            if measure(particle.x, particle.y):
-                particle.color = "blue" 
-            else:
-                particle. color = "red"
         
-        w = [random.gauss(100.0, self.sense_noise) if measure(particle.x, particle.y) == Z else abs(random.gauss(0.0, self.sense_noise)) 
+        w = [abs(random.gauss(0.0, self.sense_noise) + measure(particle)) 
              for particle in self.particles]
                                                     
         self.particles = [copy(sample) for sample in Sampling.roulette(self.particles, w)]

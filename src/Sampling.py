@@ -13,7 +13,7 @@ def roulette (samples, weights = None , count = None):
         weights = [1.0 for i in range(samples)]
 
     biggest = max(weights)
-    beta = 0.0
+    beta = 0.0 
     index = random.randint(0, count - 1)
                 
     for i in range(count):  

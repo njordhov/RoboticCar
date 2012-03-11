@@ -59,13 +59,13 @@ class Landscape:
             for item in self.terrain:
                 if (item[0] < x and item[1] < y and x < item[2] and y < item[3]):
                     distance = min ([abs (x - item[0]), abs (y - item[1]), abs ( x - item[2]), abs (y - item[3])])
-                    return 1 / (1 + distance / 200) ** 2
+                    return 1 / (1 + distance / 100) ** 2
         else:
             # sum of inverse square distance to ground
             weight = 0.0
             for ground in self.terrain:
                 distance = deviation (x, y, ground)
-                weight += 1 / (1 + distance / 25 ) ** 2  
+                weight += 1 / (1 + distance / 20 ) ** 2  
             weight = min([weight, 0.9])
             return weight   
 

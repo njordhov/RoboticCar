@@ -40,23 +40,23 @@ The numerical argument determines the complexity of the landscape.
 
 ## Manual Simulation
 
-$ cd src
-$ python
->>> import game
->>> game = game.Game(complexity = 4)
+    $ cd src
+    $ python
+    >>> import game
+    >>> game = game.Game(complexity = 4)
 
 Place a hidden robot in a random location:
 
->>> game.board.place_robot(x = None, y = None, color = "None")
+    >>> game.board.place_robot(x = None, y = None, color = "None")
 
 Set directions:
 
->>> import math; right = math.pi/2; left = - math.pi/2
+    >>> import math; right = math.pi/2; left = - math.pi/2
 
 Move:
 
->>> game.board.move_robot(right, 100)
->>> game.board.move_robot(left, 100)
+    >>> game.board.move_robot(right, 100)
+    >>> game.board.move_robot(left, 100)
 
 Repeat until the robot is localized!
 

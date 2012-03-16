@@ -6,6 +6,7 @@ from math import *
 from ParticleFilter import ParticleFilter
 from Robot import Robot
 import time
+import random
 
 
 class Simulator:
@@ -13,6 +14,8 @@ class Simulator:
     robot = None
     
     def __init__ (self, world, width=1000, height=800):
+        self.width = width
+        self.height = height
         self.master = Tk()
         self.canvas = Canvas(self.master, width=width, height=height)
         canvas = self.canvas
@@ -63,7 +66,8 @@ class Simulator:
         original_y = robot.y
         robot.move(rotation, distance)
         
-        canvas.create_line(original_x, original_y, robot.x, robot.y)
+        if robot.color and not robot.color == "None":
+            canvas.create_line(original_x, original_y, robot.x, robot.y)
         Z = self.world.surface (robot.x, robot.y)
         self.localizer.erase(canvas)                                
         localizer.update(rotation, distance, lambda particle: self.measurement_probabilty(particle, Z))
@@ -73,12 +77,15 @@ class Simulator:
         print "Sense:", Z
 
     
-    def place_robot(self, x, y, bearing=None):
+    def place_robot(self, x = None, y = None, bearing=None, color = "green"):
         """Move the robot to the given position on the canvas"""
         if not self.robot:
+            land = self.world.terrain[0]
+            if not x: x = random.randint(land[0], land[2])
+            if not y: y =  random.randint(land[1], land[3])
             self.robot = Robot (x, y)
             self.robot.display_noise = 0.0
-            self.robot.color = "green"
+            self.robot.color = color
             self.robot.size = 5
 
         robot = self.robot
@@ -87,6 +94,7 @@ class Simulator:
         rotation = bearing - robot.orientation
         distance = sqrt((robot.x - x) ** 2 + (robot.y - y) ** 2)
         self.move_robot(rotation, distance)
+        return self.robot
                 
 
         

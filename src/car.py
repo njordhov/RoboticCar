@@ -25,8 +25,8 @@ class Car:
         self.brick = brick
         self.left = Motor(brick, PORT_A)
         self.right = Motor(brick, PORT_C)
-        self.light = Light(brick, PORT_3)
-        self.ultrasonic = Ultrasonic(brick, PORT_4)
+        self.light = Light(brick, PORT_4)
+        # self.ultrasonic = Ultrasonic(brick, PORT_4)
         print "Connection established."
 
     def turn (self, angle=100, speed = 30):

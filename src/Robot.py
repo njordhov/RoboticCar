@@ -29,7 +29,8 @@ class Robot:
         # random displacement to disclose items in same position
         x = self.x + random.gauss(0.0, self.display_noise)
         y = self.y + random.gauss(0.0, self.display_noise)
-        self.widget = canvas.create_rectangle(x - size, y - size, x + size, y + size, fill=color, outline="gray20", activefill="red")
+        if not color == None and color != "None":
+            self.widget = canvas.create_rectangle(x - size, y - size, x + size, y + size, fill=color, outline="gray20", activefill="red")
     
     def move (self, rotation, distance):
         self.orientation += rotation
